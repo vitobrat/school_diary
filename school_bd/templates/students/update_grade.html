@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Редактировать оценку{% endblock %}
+{% block content %}
+<h2>Редактировать оценку</h2>
+<form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="grade" class="form-label">Оценка</label>
+        <input type="number" name="grade" id="grade" class="form-control" value="{{ grade.1 }}" required>
+    </div>
+    <div class="mb-3">
+        <label for="date" class="form-label">Дата</label>
+        <input type="date" name="date" id="date" class="form-control" value="{{ grade.2 }}" required>
+    </div>
+    <div class="mb-3">
+        <label for="student_id" class="form-label">Ученик</label>
+        <select name="student_id" id="student_id" class="form-select">
+            {% for student in students %}
+            <option value="{{ student.0 }}" {% if grade.3 == student.0 %}selected{% endif %}>{{ student.1 }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="subject_id" class="form-label">Предмет</label>
+        <select name="subject_id" id="subject_id" class="form-select">
+            {% for subject in subjects %}
+            <option value="{{ subject.0 }}" {% if grade.4 == subject.0 %}selected{% endif %}>{{ subject.1 }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+</form>
+{% endblock %}

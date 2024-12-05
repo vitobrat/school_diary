@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block title %}Редактировать расписание{% endblock %}
+{% block content %}
+<h2>Редактировать расписание</h2>
+<form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="weekday" class="form-label">День недели</label>
+        <select name="weekday" id="weekday" class="form-select" required>
+            <option value="Понедельник" {% if schedule.1 == "Понедельник" %}selected{% endif %}>Понедельник</option>
+            <option value="Вторник" {% if schedule.1 == "Вторник" %}selected{% endif %}>Вторник</option>
+            <option value="Среда" {% if schedule.1 == "Среда" %}selected{% endif %}>Среда</option>
+            <option value="Четверг" {% if schedule.1 == "Четверг" %}selected{% endif %}>Четверг</option>
+            <option value="Пятница" {% if schedule.1 == "Пятница" %}selected{% endif %}>Пятница</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="lesson_number" class="form-label">Номер урока</label>
+        <input type="number" name="lesson_number" id="lesson_number" class="form-control" value="{{ schedule.2 }}" required>
+    </div>
+    <div class="mb-3">
+        <label for="cabinet_id" class="form-label">Кабинет</label>
+        <select name="cabinet_id" id="cabinet_id" class="form-select">
+            {% for cabinet in cabinets %}
+            <option value="{{ cabinet.0 }}" {% if schedule.3 == cabinet.0 %}selected{% endif %}>{{ cabinet.1 }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="class_id" class="form-label">Класс</label>
+        <select name="class_id" id="class_id" class="form-select">
+            {% for class in classes %}
+            <option value="{{ class.0 }}" {% if schedule.4 == class.0 %}selected{% endif %}>{{ class.1 }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="teacher_id" class="form-label">Учитель</label>
+        <select name="teacher_id" id="teacher_id" class="form-select">
+            {% for teacher in teachers %}
+            <option value="{{ teacher.0 }}" {% if schedule.5 == teacher.0 %}selected{% endif %}>{{ teacher.1 }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="subject_id" class="form-label">Предмет</label>
+        <select name="subject_id" id="subject_id" class="form-select">
+            {% for subject in subjects %}
+            <option value="{{ subject.0 }}" {% if schedule.6 == subject.0 %}selected{% endif %}>{{ subject.1 }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+</form>
+{% endblock %}

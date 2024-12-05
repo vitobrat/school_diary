@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Добавить учителя{% endblock %}
+{% block content %}
+<h1 class="mb-4">Добавить учителя</h1>
+<form method="post" class="row g-3">
+    {% csrf_token %}
+    <div class="col-md-6">
+        <label class="form-label">ФИО:</label>
+        <input type="text" name="full_name" class="form-control" required>
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">Предмет:</label>
+        <select name="subject_id" class="form-select" required>
+            {% for subject in subjects %}
+            <option value="{{ subject.0 }}">{{ subject.1 }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">Кабинет:</label>
+        <select name="cabinet_id" class="form-select">
+            <option value="">Без кабинета</option>
+            {% for cabinet in cabinets %}
+            <option value="{{ cabinet.0 }}">{{ cabinet.1 }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-12">
+        <button type="submit" class="btn btn-success">Добавить</button>
+        <a href="{% url 'teacher_list' %}" class="btn btn-secondary">Назад</a>
+    </div>
+</form>
+{% endblock %}

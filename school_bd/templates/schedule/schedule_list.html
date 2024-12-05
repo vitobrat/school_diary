@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Расписание{% endblock %}
+{% block content %}
+<h2>Расписание</h2>
+<a href="{% url 'add_schedule' %}" class="btn btn-primary mb-3">Добавить запись</a>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>День недели</th>
+            <th>Номер урока</th>
+            <th>Кабинет</th>
+            <th>Класс</th>
+            <th>Учитель</th>
+            <th>Предмет</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for schedule in schedules %}
+        <tr>
+            <td>{{ schedule.1 }}</td>
+            <td>{{ schedule.2 }}</td>
+            <td>{{ schedule.3 }}</td>
+            <td>{{ schedule.4 }}</td>
+            <td>{{ schedule.5 }}</td>
+            <td>{{ schedule.6 }}</td>
+            <td>
+                <a href="{% url 'update_schedule' schedule.0 %}" class="btn btn-warning btn-sm">Редактировать</a>
+                <a href="{% url 'delete_schedule' schedule.0 %}" class="btn btn-danger btn-sm">Удалить</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

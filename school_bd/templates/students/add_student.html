@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Добавить ученика{% endblock %}
+{% block content %}
+<h2>Добавить ученика</h2>
+<form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="first_name" class="form-label">Имя</label>
+        <input type="text" name="first_name" id="first_name" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label for="last_name" class="form-label">Фамилия</label>
+        <input type="text" name="last_name" id="last_name" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label for="class_id" class="form-label">Класс</label>
+        <select name="class_id" id="class_id" class="form-select">
+            <option value="">Не указано</option>
+            {% for class in classes %}
+            <option value="{{ class.0 }}">{{ class.1 }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-success">Добавить</button>
+</form>
+{% endblock %}

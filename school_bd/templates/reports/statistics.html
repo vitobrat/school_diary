@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Статистика</h2>
+<form method="get">
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Сгенерировать</button>
+</form>
+
+{% if results %}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Колонка 1</th>
+            <th>Колонка 2</th>
+            <th>...</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in results %}
+        <tr>
+            <td>{{ row.0 }}</td>
+            <td>{{ row.1 }}</td>
+            <td>...</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% endblock %}

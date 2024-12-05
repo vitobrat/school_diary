@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}Редактировать учителя{% endblock %}
+{% block content %}
+<h1 class="mb-4">Редактировать учителя</h1>
+<form method="post" class="row g-3">
+    {% csrf_token %}
+    <div class="col-md-6">
+        <label class="form-label">ФИО:</label>
+        <input type="text" name="full_name" class="form-control" value="{{ teacher.1 }}" required>
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">Предмет:</label>
+        <select name="subject_id" class="form-select" required>
+            {% for subject in subjects %}
+            <option value="{{ subject.0 }}" {% if subject.0 == teacher.2 %}selected{% endif %}>
+                {{ subject.1 }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">Кабинет:</label>
+        <select name="cabinet_id" class="form-select">
+            <option value="" {% if not teacher.3 %}selected{% endif %}>Без кабинета</option>
+            {% for cabinet in cabinets %}
+            <option value="{{ cabinet.0 }}" {% if cabinet.0 == teacher.3 %}selected{% endif %}>
+                {{ cabinet.1 }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-12">
+        <button type="submit" class="btn btn-success">Сохранить</button>
+        <a href="{% url 'teacher_list' %}" class="btn btn-secondary">Назад</a>
+    </div>
+</form>
+{% endblock %}
