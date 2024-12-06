@@ -7,29 +7,33 @@ FROM schedule s
 LEFT JOIN cabinets c ON s.cabinet_id = c.id
 LEFT JOIN classes cl ON s.class_id = cl.id
 LEFT JOIN teachers t ON s.teacher_id = t.id
-LEFT JOIN subjects sub ON s.subject_id = sub.id
+LEFT JOIN subjects sub ON t.subject_id = sub.id
 ORDER BY s.weekday, s.lesson_number;
 """
 
+
 # Получить одну запись расписания по ID
 GET_SCHEDULE_BY_ID = """
-SELECT id, weekday, lesson_number, cabinet_id, class_id, teacher_id, subject_id
+SELECT id, weekday, lesson_number, cabinet_id, class_id, teacher_id
 FROM schedule
 WHERE id = %s;
 """
 
+
 # Добавить новую запись в расписание
 ADD_SCHEDULE = """
-INSERT INTO schedule (weekday, lesson_number, cabinet_id, class_id, teacher_id, subject_id)
-VALUES (%s, %s, %s, %s, %s, %s);
+INSERT INTO schedule (weekday, lesson_number, cabinet_id, class_id, teacher_id)
+VALUES (%s, %s, %s, %s, %s);
 """
+
 
 # Обновить запись расписания
 UPDATE_SCHEDULE = """
 UPDATE schedule
-SET weekday = %s, lesson_number = %s, cabinet_id = %s, class_id = %s, teacher_id = %s, subject_id = %s
+SET weekday = %s, lesson_number = %s, cabinet_id = %s, class_id = %s, teacher_id = %s
 WHERE id = %s;
 """
+
 
 # Удалить запись расписания
 DELETE_SCHEDULE = """

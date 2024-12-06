@@ -42,14 +42,6 @@
             {% endfor %}
         </select>
     </div>
-    <div class="mb-3">
-        <label for="subject_id" class="form-label">Предмет</label>
-        <select name="subject_id" id="subject_id" class="form-select">
-            {% for subject in subjects %}
-            <option value="{{ subject.0 }}" {% if schedule.6 == subject.0 %}selected{% endif %}>{{ subject.1 }}</option>
-            {% endfor %}
-        </select>
-    </div>
     <button type="submit" class="btn btn-primary">Сохранить</button>
 </form>
 {% endblock %}
