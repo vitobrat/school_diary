@@ -1,30 +1,83 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Статистика</h2>
-<form method="get">
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Сгенерировать</button>
-</form>
+<div class="container mt-5">
+    <h2 class="text-center">Статистика</h2>
 
-{% if results %}
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Колонка 1</th>
-            <th>Колонка 2</th>
-            <th>...</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for row in results %}
-        <tr>
-            <td>{{ row.0 }}</td>
-            <td>{{ row.1 }}</td>
-            <td>...</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-{% endif %}
+    <form method="post" class="mt-4">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="class_id" class="form-label">Выберите класс:</label>
+            <select name="class_id" id="class_id" class="form-select">
+                {% for class in classes %}
+                <option value="{{ class.0 }}">{{ class.1 }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Сгенерировать</button>
+    </form>
+
+    {% if results %}
+    <div class="mt-5">
+        {% if results.students_count %}
+        <p><strong>Количество учеников:</strong> {{ results.students_count.0.0 }}</p>
+        {% endif %}
+
+        {% if results.teachers_by_subject %}
+        <h4>Учителя по предметам:</h4>
+        <ul>
+            {% for item in results.teachers_by_subject %}
+            <li><strong>{{ item.subject }}:</strong> {{ item.count }} учителя(ей)</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        
+        {% if results.students_by_class %}
+        <h4>Ученики по классам:</h4>
+        <ul>
+            {% for item in results.students_by_class %}
+            <li><strong>{{ item.class_name }}:</strong> {{ item.count }} учеников</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        
+
+        {% if results.cabinets_count %}
+        <p><strong>Количество кабинетов:</strong> {{ results.cabinets_count.0.0 }}</p>
+        {% endif %}
+
+
+        {% if results.grades_by_class %}
+        <h4>Распределение оценок по классам:</h4>
+        <div class="row">
+            <div class="col-md-4">
+                <h5>Двоечники</h5>
+                <ul>
+                    {% for item in results.grades_by_class.twos %}
+                    <li><strong>{{ item.class_name }}:</strong> {{ item.count }} двоечников</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h5>Хорошисты</h5>
+                <ul>
+                    {% for item in results.grades_by_class.fours %}
+                    <li><strong>{{ item.class_name }}:</strong> {{ item.count }} хорошистов</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h5>Отличники</h5>
+                <ul>
+                    {% for item in results.grades_by_class.fives %}
+                    <li><strong>{{ item.class_name }}:</strong> {{ item.count }} отличников</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
 {% endblock %}

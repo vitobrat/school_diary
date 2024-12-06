@@ -19,6 +19,3 @@ class ScheduleQueryForm(forms.Form):
 
 class StatisticsForm(forms.Form):
     class_id = forms.IntegerField(label="Класс", required=False)
-    include_grades_distribution = forms.BooleanField(
-        label="Включить распределение оценок", required=False
-    )
