@@ -16,7 +16,8 @@ GET_SUBJECTS = """
 GET_SUBJECT_BY_FILTER = """
     SELECT DISTINCT subjects.name
     FROM schedule
-    LEFT JOIN subjects ON schedule.subject_id = subjects.id
+    LEFT JOIN teachers ON schedule.teacher_id = teachers.id
+    LEFT JOIN subjects ON teachers.subject_id = subjects.id
     LEFT JOIN classes ON schedule.class_id = classes.id
     WHERE schedule.weekday = %s AND schedule.class_id = %s AND schedule.lesson_number = %s
 """
@@ -42,8 +43,8 @@ GET_CLASSES_BY_FILTER = """
     FROM schedule
     LEFT JOIN teachers ON schedule.teacher_id = teachers.id
     LEFT JOIN classes ON schedule.class_id = classes.id
-    LEFT JOIN subjects ON schedule.subject_id = subjects.id
-    WHERE schedule.teacher_id = %s AND schedule.subject_id = %s
+    LEFT JOIN subjects ON teachers.subject_id = subjects.id
+    WHERE schedule.teacher_id = %s
 """
 
 GET_SCHEDULE_BY_FILTER = """
@@ -51,9 +52,10 @@ GET_SCHEDULE_BY_FILTER = """
     FROM schedule
     LEFT JOIN teachers ON schedule.teacher_id = teachers.id
     LEFT JOIN classes ON schedule.class_id = classes.id
-    LEFT JOIN subjects ON schedule.subject_id = subjects.id
+    LEFT JOIN subjects ON teachers.subject_id = subjects.id
     LEFT JOIN cabinets ON schedule.cabinet_id = cabinets.id
     WHERE schedule.weekday = %s AND schedule.class_id = %s
+    ORDER BY schedule.lesson_number
 """
 
 COUNT_STUDENT_IN_CLASS = """

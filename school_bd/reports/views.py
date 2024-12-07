@@ -18,21 +18,22 @@ def schedule_queries(request):
         lesson_number = request.POST.get("lesson_number")
         teacher_id = request.POST.get("teacher_id")
         subject_id = request.POST.get("subject_id")
-
+        print(class_id, weekday, lesson_number, teacher_id, subject_id)
         if weekday and class_id and lesson_number:
             results["subject"] = execute_sql(GET_SUBJECT_BY_FILTER, [weekday, class_id, lesson_number])
         if class_id:
             results["teachers"] = execute_sql(GET_TEACHERS_BY_FILTER, [class_id])
         if weekday and lesson_number and class_id:
             results["cabinet"] = execute_sql(GET_CABINET_BY_FILTER, [lesson_number, weekday, class_id])
-        if teacher_id and subject_id:
-            results["classes"] = execute_sql(GET_CLASSES_BY_FILTER, [teacher_id, subject_id])
+        if teacher_id:
+            results["classes"] = execute_sql(GET_CLASSES_BY_FILTER, [teacher_id])
         if weekday and class_id:
             results["schedule"] = execute_sql(GET_SCHEDULE_BY_FILTER, [weekday, class_id])
 
     subjects = execute_sql(GET_SUBJECTS)
     classes = execute_sql(GET_CLASSES)
     teachers = execute_sql(GET_TEACHERS)
+    print(results)
 
     return render(
         request,

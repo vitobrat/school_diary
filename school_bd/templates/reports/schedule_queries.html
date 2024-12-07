@@ -17,13 +17,13 @@
         </div>
 
         <div class="mb-3">
-            <label for="weekday" class="form-label">День недели:</label>
-            <select name="weekday" id="weekday" class="form-select">
-                <option value="Monday">Понедельник</option>
-                <option value="Tuesday">Вторник</option>
-                <option value="Wednesday">Среда</option>
-                <option value="Thursday">Четверг</option>
-                <option value="Friday">Пятница</option>
+            <label for="weekday" class="form-label">День недели</label>
+            <select name="weekday" id="weekday" class="form-select" required>
+                <option value="Понедельник">Понедельник</option>
+                <option value="Вторник">Вторник</option>
+                <option value="Среда">Среда</option>
+                <option value="Четверг">Четверг</option>
+                <option value="Пятница">Пятница</option>
             </select>
         </div>
 
@@ -37,15 +37,6 @@
             <select name="teacher_id" id="teacher_id" class="form-select">
                 {% for teacher in teachers %}
                 <option value="{{ teacher.0 }}">{{ teacher.1 }}</option>
-                {% endfor %}
-            </select>
-        </div>
-
-        <div class="mb-3">
-            <label for="subject_id" class="form-label">Выберите предмет:</label>
-            <select name="subject_id" id="subject_id" class="form-select">
-                {% for subject in subjects %}
-                <option value="{{ subject.0 }}">{{ subject.1 }}</option>
                 {% endfor %}
             </select>
         </div>
