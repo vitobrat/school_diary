@@ -52,26 +52,26 @@
         <h4>Распределение оценок по классам:</h4>
         <div class="row">
             <div class="col-md-4">
-                <h5>Двоек</h5>
+                <h5>Двоечники</h5>
                 <ul>
                     {% for item in results.grades_by_class.twos %}
-                    <li><strong>{{ item.class_name }}:</strong> {{ item.count }} Двоек</li>
+                    <li><strong>{{ item.class_name }}:</strong> {{ item.count }} Двоечник(ов)</li>
                     {% endfor %}
                 </ul>
             </div>
             <div class="col-md-4">
-                <h5>Четверок</h5>
+                <h5>Хорошисты</h5>
                 <ul>
                     {% for item in results.grades_by_class.fours %}
-                    <li><strong>{{ item.class_name }}:</strong> {{ item.count }} Четверок</li>
+                    <li><strong>{{ item.class_name }}:</strong> {{ item.count }} Хорошист(ов)</li>
                     {% endfor %}
                 </ul>
             </div>
             <div class="col-md-4">
-                <h5>Пятерок</h5>
+                <h5>Отличники</h5>
                 <ul>
                     {% for item in results.grades_by_class.fives %}
-                    <li><strong>{{ item.class_name }}:</strong> {{ item.count }} Пятерок</li>
+                    <li><strong>{{ item.class_name }}:</strong> {{ item.count }} Отличник(ов)</li>
                     {% endfor %}
                 </ul>
             </div>

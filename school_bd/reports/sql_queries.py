@@ -85,28 +85,45 @@ COUNT_STUDENTS_IN_EACH_CLASS = """
 """
 
 COUNT_2_GRADES_BY_CLASS = """
-    SELECT classes.name, COUNT(grades.id)
-    FROM grades
-    LEFT JOIN students ON grades.student_id = students.id
+    SELECT classes.name, COUNT(failing_students.id)
+    FROM (
+        SELECT students.id AS id, AVG(grades.grade) AS average_grade
+        FROM grades
+        LEFT JOIN students ON grades.student_id = students.id
+        GROUP BY students.id
+        HAVING AVG(grades.grade) < 2.5
+    ) AS failing_students
+    LEFT JOIN students ON failing_students.id = students.id
     LEFT JOIN classes ON students.class_id = classes.id
-    WHERE grades.grade = 2
     GROUP BY classes.name
 """
+
 
 COUNT_4_GRADES_BY_CLASS = """
-    SELECT classes.name, COUNT(grades.id)
-    FROM grades
-    LEFT JOIN students ON grades.student_id = students.id
+    SELECT classes.name, COUNT(average_students.id)
+    FROM (
+        SELECT students.id AS id, AVG(grades.grade) AS average_grade
+        FROM grades
+        LEFT JOIN students ON grades.student_id = students.id
+        GROUP BY students.id
+        HAVING AVG(grades.grade) BETWEEN 3.5 AND 4.5
+    ) AS average_students
+    LEFT JOIN students ON average_students.id = students.id
     LEFT JOIN classes ON students.class_id = classes.id
-    WHERE grades.grade = 4
     GROUP BY classes.name
 """
 
+
 COUNT_5_GRADES_BY_CLASS = """
-    SELECT classes.name, COUNT(grades.id)
-    FROM grades
-    LEFT JOIN students ON grades.student_id = students.id
+    SELECT classes.name, COUNT(average_students.id)
+    FROM (
+        SELECT students.id AS id, AVG(grades.grade) AS average_grade
+        FROM grades
+        LEFT JOIN students ON grades.student_id = students.id
+        GROUP BY students.id
+        HAVING AVG(grades.grade) > 4.5
+    ) AS average_students
+    LEFT JOIN students ON average_students.id = students.id
     LEFT JOIN classes ON students.class_id = classes.id
-    WHERE grades.grade = 5
     GROUP BY classes.name
 """
